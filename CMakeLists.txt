@@ -42,6 +42,14 @@ install(
   DESTINATION "include"
 )
 
+# Install the export file
+install(
+  EXPORT "Fortran_UDUNITS2Targets"
+  FILE "Fortran_UDUNITS2Targets.cmake"
+  NAMESPACE "Fortran_UDUNITS2::"
+  DESTINATION "lib/cmake/Fortran_UDUNITS2"
+)
+
 # https://www.scivision.dev/cmake-auto-gitignore-build-dir/
 # --- auto-ignore build directory
 if(NOT EXISTS ${PROJECT_BINARY_DIR}/.gitignore)
