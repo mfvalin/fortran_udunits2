@@ -4,9 +4,11 @@
 #
 # This module defines:
 #
-#   - udunits::udunits    - The udunits shared library and include directory, all in a single target.
-#   - udunits_SHARED_LIB  - The library
-#   - udunits_INCLUDE_DIR - The include directory
+#   - udunits::udunits       - The udunits shared library and include directory, all in a single target.
+#   - udunits_FOUND          - True if udunits was found
+#   - udunits_INCLUDE_DIR    - The include directory
+#   - udunits_LIBRARY        - The library
+#   - udunits_LIBRARY_SHARED - Whether the library is shared or not
 #
 # The following paths will be searched in order if set in CMake (first priority) or environment (second priority):
 #
@@ -24,24 +26,32 @@ find_path (
 	HINTS ${UDUNITS2_INCLUDE_DIRS} $ENV{UDUNITS2_INCLUDE_DIRS}
 		${UDUNITS2_ROOT} $ENV{UDUNITS2_ROOT}
 		${UDUNITS2_PATH} $ENV{UDUNITS2_PATH}
-	DOC "Path to udunits2.h"
-	)
-find_library(udunits_SHARED_LIB
+  PATH_SUFFIXES include include/udunits2
+	DOC "Path to udunits2.h" )
+
+find_library(udunits_LIBRARY
 	NAMES udunits2 udunits
 	HINTS ${UDUNITS2_LIBRARIES} $ENV{UDUNITS2_LIBRARIES}
 		${UDUNITS2_ROOT} $ENV{UDUNITS2_ROOT}
 		${UDUNITS2_PATH} $ENV{UDUNITS2_PATH}
-	DOC "Path to libudunits"
-	)
+  PATH_SUFFIXES lib64 lib
+	DOC "Path to libudunits library" )
+
+# We need to support both static and shared libraries
+if (udunits_LIBRARY MATCHES ".*\\.a$")
+  set(udunits_LIBRARY_SHARED FALSE)
+else()
+  set(udunits_LIBRARY_SHARED TRUE)
+endif()
 
 include (FindPackageHandleStandardArgs)
-find_package_handle_standard_args (udunits DEFAULT_MSG udunits_SHARED_LIB udunits_INCLUDE_DIR)
+find_package_handle_standard_args (udunits DEFAULT_MSG udunits_LIBRARY udunits_INCLUDE_DIR)
 
-mark_as_advanced (udunits_SHARED_LIB udunits_INCLUDE_DIR)
+mark_as_advanced (udunits_LIBRARY udunits_INCLUDE_DIR)
 
 if(udunits_FOUND AND NOT TARGET udunits::udunits)
 	add_library(udunits::udunits INTERFACE IMPORTED)
 	set_target_properties(udunits::udunits PROPERTIES INTERFACE_INCLUDE_DIRECTORIES ${udunits_INCLUDE_DIR})
-	set_target_properties(udunits::udunits PROPERTIES INTERFACE_LINK_LIBRARIES ${udunits_SHARED_LIB})
+  set_target_properties(udunits::udunits PROPERTIES INTERFACE_LINK_LIBRARIES ${udunits_LIBRARY})
 endif()
 

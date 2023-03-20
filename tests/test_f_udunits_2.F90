@@ -1,4 +1,3 @@
-#include <f_udunits_2.F90>
 	program test_f_udunits_2  ! very rudimentary test program for libudunits2 Fortran nterface
 !
 ! example of compilation and execution with gfortran (udunits2 installed in /opt/udunits2)

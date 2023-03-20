@@ -11,6 +11,18 @@ list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 # Find the UDUNITS2 library
 find_package(udunits REQUIRED)
 
+# Let's print some information about the library
+include(CMakePrintHelpers)
+cmake_print_properties(
+  TARGETS udunits::udunits
+  PROPERTIES
+    INTERFACE_INCLUDE_DIRECTORIES
+    INTERFACE_LINK_LIBRARIES
+)
+cmake_print_variables(udunits_INCLUDE_DIR)
+cmake_print_variables(udunits_LIBRARY)
+cmake_print_variables(udunits_LIBRARY_SHARED)
+
 # Add source files
 set (SOURCES
   "source/f_udunits_2.F90"
@@ -50,6 +62,37 @@ install(
   DESTINATION "lib/cmake/Fortran_UDUNITS2"
 )
 
+# NOTE: The below bit of code is commented out because it is not
+#       working. I can't seem to figure out how to link to libxml2
+#       from macOS. I seem to be hitting the "How to link against
+#       tbd files" problem.
+#       https://discourse.cmake.org/t/newer-versions-of-macos-require-linking-against-tbd-files-and-not-old-system-paths-to-dylib/6871/3
+
+#################################################################
+# # There is a test in tests, let's add it                      #
+# enable_testing()                                              #
+#                                                               #
+# # Linking to udunits requires XML2                            #
+# find_package(LibXml2 REQUIRED)                                #
+# cmake_print_properties(                                       #
+#   TARGETS LibXml2::LibXml2                                    #
+#   PROPERTIES                                                  #
+#     INTERFACE_INCLUDE_DIRECTORIES                             #
+#     INTERFACE_LINK_LIBRARIES                                  #
+# )                                                             #
+# cmake_print_variables(LibXml2_INCLUDE_DIRS LibXml2_LIBRARIES) #
+#                                                               #
+# # Build the executable                                        #
+# add_executable(                                               #
+#   "test_f_udunits_2.exe"                                      #
+#   "tests/test_f_udunits_2.F90"                                #
+# )                                                             #
+# target_link_libraries(                                        #
+#   test_f_udunits_2.exe                                        #
+#   Fortran_UDUNITS2 udunits::udunits LibXml2::LibXml2          #
+# )                                                             #
+#                                                               #
+#################################################################
 # https://www.scivision.dev/cmake-auto-gitignore-build-dir/
 # --- auto-ignore build directory
 if(NOT EXISTS ${PROJECT_BINARY_DIR}/.gitignore)
