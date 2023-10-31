@@ -20,47 +20,47 @@ recently tested with GNU Fortran, Nvidia, AOCC, Intel Fortran compilers
 
 for all the C functions that have been interfaced:
 
-0-  the calling FORTRAN code must include
+0-  the calling Fortran code must include
           use f_udunits_2
-          to use these FORTRAN functions/subroutines
+          to use these Fortran functions/subroutines
 
-1-  the FORTRAN name will be the C name prefixed with f_
-    FORTRAN function f_ut_read_xml mimics C function ut_read_xml
+1-  the Fortran name will be the C name prefixed with f_
+    Fortran function f_ut_read_xml mimics C function ut_read_xml
 
-2-  where the C code uses a typed pointer, the FORTRAN code uses a typed object
+2-  where the C code uses a typed pointer, the Fortran code uses a typed object
 
     type(UT_SYSTEM_PTR)     replaces ut_system*
     type(UT_UNIT_PTR)       replaces ut_unit*
     type(CV_CONVERTER_PTR)  replaces cv_converter*
 
-3-  where a C function has a void return, a FORTRAN subroutine is used
+3-  where a C function has a void return, a Fortran subroutine is used
 
 4-  where a C function returns zero/nonzero for a C style true/false
-    the equivalent FORTRAN function returns a FORTRAN logical
+    the equivalent Fortran function returns a Fortran logical
       (to be usable in an equivalent way in a logical expression)
 
-5a- where a C input argument is char *, the FORTRAN code uses character(len=*)
+5a- where a C input argument is char *, the Fortran code uses character(len=*)
     copy to a C compatible zero terminated string is handled internally
-      the FORTRAN string is "trailing blanks trimmed" before the zero byte is added
+      the Fortran string is "trailing blanks trimmed" before the zero byte is added
 
-5b- where a C function returns char *, the FORTRAN function return type is character(len=256)
+5b- where a C function returns char *, the Fortran function return type is character(len=256)
 
-6-  ut_status is an integer, symbols with the same name are available to FORTRAN with
+6-  ut_status is an integer, symbols with the same name are available to Fortran with
       use f_udunits_2
 
-7-  ut_encoding is an integer, symbols with the same name are available to FORTRAN with
+7-  ut_encoding is an integer, symbols with the same name are available to Fortran with
       use f_udunits_2
 
 NOTES:
 
-FORTRAN interface(s) for function(s) returning char * (ut_trim) not implemented
-one should use the FORTRAN trim function (may not work in all cases)
+Fortran interface(s) for function(s) returning char * (ut_trim) not implemented
+one should use the Fortran trim function (may not work in all cases)
 
-FORTRAN interfaces to "visitor" functions are not implemented
+Fortran interfaces to "visitor" functions are not implemented
       ut_accept_visitor (const ut_unit* unit, const ut_visitor* visitor, void* arg)
       Data type: ut_visitor 
 
-FORTRAN interfaces to functions using a variable argument list and message handler 
+Fortran interfaces to functions using a variable argument list and message handler 
 are not implemented
    int ut_handle_error_message (const char* fmt, ...)
    ut_error_message_handler ut_set_error_message_handler (ut_error_message_handler handler)
