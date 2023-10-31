@@ -1,5 +1,5 @@
 module f_udunits_2
-!    FORTRAN interface to the C library libudunits2
+!    Fortran interface to the C library libudunits2
 !    (currently modeled after version 2.0.4, but should work with subsequent versions)
 !        the C library libudunits2 is
 !            Copyright University Corporation for Atmospheric Research and contributors
@@ -35,7 +35,7 @@ module f_udunits_2
 !        Université du Québec à Montréal
 !        December 2021
 !
-!        a version of a FORTRAN 200x compliant compiler that supports
+!        a version of a Fortran 200x compliant compiler that supports
 !        use ISO_C_BINDING
 !        is needed
 !
@@ -46,14 +46,14 @@ module f_udunits_2
 !   see also :
 !   https://github.com/mfvalin/fortran_udunits2/blob/main/README.md
 !
-!        FORTRAN interface for function returning char * (ut_trim) not implemented
-!        one should use FORTRAN trim function (may not work in all cases)
+!        Fortran interface for function returning char * (ut_trim) not implemented
+!        one should use Fortran trim function (may not work in all cases)
 !
-!        FORTRAN interfaces to "visitor" functions are not implemented
+!        Fortran interfaces to "visitor" functions are not implemented
 !       ut_accept_visitor (const ut_unit* unit, const ut_visitor* visitor, void* arg)
 !       Data type: ut_visitor
 !
-!        FORTRAN interfaces to functions using a variable argument list and message handler
+!        Fortran interfaces to functions using a variable argument list and message handler
 !        are not implemented
 !    int ut_handle_error_message (const char* fmt, ...)
 !    ut_error_message_handler ut_set_error_message_handler (ut_error_message_handler handler)

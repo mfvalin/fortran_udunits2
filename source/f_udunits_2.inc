@@ -1,4 +1,4 @@
-!    FORTRAN interface to the C library udunits2
+!    Fortran interface to the C library udunits2
 !        the C library udunits2 (C) is Copyright UCAR/Unidata
 !        this fortran Interface is (C) is Copyright Université du Québec à Montréal
 !     Redistribution and use in source and binary forms, with or without modification,
