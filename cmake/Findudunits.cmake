@@ -21,21 +21,21 @@
 #     See https://github.com/JCSDA-internal/jedi-stack/blob/develop/modulefiles/compiler/compilerName/compilerVersion/udunits/udunits.lua for details.
 
 find_path (
-	udunits_INCLUDE_DIR
-	udunits2.h
-	HINTS ${UDUNITS2_INCLUDE_DIRS} $ENV{UDUNITS2_INCLUDE_DIRS}
-		${UDUNITS2_ROOT} $ENV{UDUNITS2_ROOT}
-		${UDUNITS2_PATH} $ENV{UDUNITS2_PATH}
+  udunits_INCLUDE_DIR
+  udunits2.h
+  HINTS ${UDUNITS2_INCLUDE_DIRS} $ENV{UDUNITS2_INCLUDE_DIRS}
+    ${UDUNITS2_ROOT} $ENV{UDUNITS2_ROOT}
+    ${UDUNITS2_PATH} $ENV{UDUNITS2_PATH}
   PATH_SUFFIXES include include/udunits2
-	DOC "Path to udunits2.h" )
+  DOC "Path to udunits2.h" )
 
 find_library(udunits_LIBRARY
-	NAMES udunits2 udunits
-	HINTS ${UDUNITS2_LIBRARIES} $ENV{UDUNITS2_LIBRARIES}
-		${UDUNITS2_ROOT} $ENV{UDUNITS2_ROOT}
-		${UDUNITS2_PATH} $ENV{UDUNITS2_PATH}
+  NAMES udunits2 udunits
+  HINTS ${UDUNITS2_LIBRARIES} $ENV{UDUNITS2_LIBRARIES}
+    ${UDUNITS2_ROOT} $ENV{UDUNITS2_ROOT}
+    ${UDUNITS2_PATH} $ENV{UDUNITS2_PATH}
   PATH_SUFFIXES lib64 lib
-	DOC "Path to libudunits library" )
+  DOC "Path to libudunits library" )
 
 # We need to support both static and shared libraries
 if (udunits_LIBRARY MATCHES ".*\\.a$")
@@ -50,8 +50,8 @@ find_package_handle_standard_args (udunits DEFAULT_MSG udunits_LIBRARY udunits_I
 mark_as_advanced (udunits_LIBRARY udunits_INCLUDE_DIR)
 
 if(udunits_FOUND AND NOT TARGET udunits::udunits)
-	add_library(udunits::udunits INTERFACE IMPORTED)
-	set_target_properties(udunits::udunits PROPERTIES INTERFACE_INCLUDE_DIRECTORIES ${udunits_INCLUDE_DIR})
+  add_library(udunits::udunits INTERFACE IMPORTED)
+  set_target_properties(udunits::udunits PROPERTIES INTERFACE_INCLUDE_DIRECTORIES ${udunits_INCLUDE_DIR})
   set_target_properties(udunits::udunits PROPERTIES INTERFACE_LINK_LIBRARIES ${udunits_LIBRARY})
 endif()
 
