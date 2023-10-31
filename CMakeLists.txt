@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.17)
+cmake_minimum_required(VERSION 3.23)
 
 project(
   Fortran_UDUNITS2
@@ -11,18 +11,6 @@ list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 # Find the UDUNITS2 library
 find_package(udunits REQUIRED)
 find_package(EXPAT REQUIRED)
-
-# Let's print some information about the library
-include(CMakePrintHelpers)
-cmake_print_properties(
-  TARGETS udunits::udunits
-  PROPERTIES
-    INTERFACE_INCLUDE_DIRECTORIES
-    INTERFACE_LINK_LIBRARIES
-)
-cmake_print_variables(udunits_INCLUDE_DIR)
-cmake_print_variables(udunits_LIBRARY)
-cmake_print_variables(udunits_LIBRARY_SHARED)
 
 # Add source files
 set (SOURCES
@@ -78,7 +66,7 @@ install(
   FILES
     ${CMAKE_CURRENT_BINARY_DIR}/Fortran_UDUNITS2Config.cmake
     ${CMAKE_CURRENT_BINARY_DIR}/Fortran_UDUNITS2Config-version.cmake
-    DESTINATION "${Fortran_UDUNITS2_TOP_DIR}/cmake"
+  DESTINATION "${Fortran_UDUNITS2_TOP_DIR}/cmake"
 )
 
 install(
@@ -93,18 +81,8 @@ export(EXPORT Fortran_UDUNITS2
 )
 
 # There is a test in tests, let's add it
-# Linking to udunits requires EXPAT
-find_package(EXPAT REQUIRED)
-
-# Build the executable
-add_executable(
-  "test_f_udunits_2.exe"
-  "tests/test_f_udunits_2.F90"
-)
-target_link_libraries(
-  test_f_udunits_2.exe
-  Fortran_UDUNITS2 udunits::udunits EXPAT::EXPAT
-)
+add_executable(test_f_udunits_2.exe tests/test_f_udunits_2.F90)
+target_link_libraries(test_f_udunits_2.exe Fortran_UDUNITS2)
 
 # https://www.scivision.dev/cmake-auto-gitignore-build-dir/
 # --- auto-ignore build directory
